@@ -19,7 +19,7 @@ body {
 
 #root {
   background-color: var(--swatch-primary);
-  font-family: serif;
+  font-family: Tangerine,cursive;
   position: absolute;
   width: 80%;
   left: 10%;
@@ -47,7 +47,7 @@ body {
   background-image: linear-gradient(to bottom,         
   #b8b808, #636723);
   color: white;
-  font-size: 54pt;
+  font-size: 35pt;
   border-color: black;
   border-width: 2px;
   border-style: solid;
@@ -156,8 +156,20 @@ body {
 .playlister-song, .playlister-song-dragged-to { 
   display:flex;
   align-items: center;
-  font-size: 24pt;
+  font-size: 20pt;
   height:20%;
+  border-radius: 70px;
+  background-color: var(--swatch-complement);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+
+
+}
+.playlister-song:hover{
+  background-color: crimson;
 }
 
 input {
@@ -191,8 +203,8 @@ input {
 
 .modal-root {
   position: relative;
-  max-width: 1200vw;
-  max-height: 600vh;
+  max-width: 65vw;
+  max-height: 40vh;
   overflow: visible;
   display: flex;
   flex-direction: column;
@@ -220,7 +232,7 @@ input {
   grid-template-columns: 30% 65%;
   grid-template-rows: 33% 33% 33%;
   gap: 10px 20px;
-  font-size: 48pt;
+  font-size: 20pt;
 }
 
 span {
