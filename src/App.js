@@ -7,6 +7,8 @@ import jsTPS from './common/jsTPS.js';
 
 // OUR TRANSACTIONS
 import MoveSong_Transaction from './transactions/MoveSong_Transaction.js';
+import AddSong_Transaction from './transactions/AddSong_Transaction.js';
+import RemoveSong_Transaction from './transactions/RemoveSong_Transaction.js';
 
 // THESE REACT COMPONENTS ARE MODALS
 import DeleteListModal from './components/DeleteListModal.js';
@@ -274,6 +276,44 @@ class App extends React.Component {
         let modal = document.getElementById("delete-list-modal");
         modal.classList.remove("is-visible");
     }
+    //delete song transaction
+
+    
+    addSong()
+    {
+        let list = this.state.currentList
+        console.log(list)
+        let s = {
+            title: "Untitled",
+            artist: "Unknown",
+            youTubeId: "dQw4w9WgXcQ"
+        };
+        list.songs.push(s);
+        console.log(list)
+        this.setStateWithUpdatedList(list);
+    }
+    addSongTransaction= () =>
+    {
+        let tpsObj = new AddSong_Transaction(this,this.state.currentList.songs.length);
+        
+        this.tps.addTransaction(tpsObj);
+    }
+
+    removeSong(index)
+    {
+       console.log(index);
+       let remVal = this.state.currentList.songs.splice(index,1);
+       this.setStateWithUpdatedList(this.state.currentList);
+    }
+    undoRemoveSong()
+    {
+
+    }
+
+    removeSongTransaction= () =>
+    {
+
+    }
     render() {
         let canAddSong = this.state.currentList !== null;
         let canUndo = this.tps.hasTransactionToUndo();
@@ -300,6 +340,7 @@ class App extends React.Component {
                     undoCallback={this.undo}
                     redoCallback={this.redo}
                     closeCallback={this.closeCurrentList}
+                    addSongCallback={this.addSongTransaction}
                 />
                 <PlaylistCards
                     currentList={this.state.currentList}

@@ -58,7 +58,7 @@ body {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   text-align:center;
-  font-size: 36pt;
+  font-size: 17px;
   font-weight: bold;
   display:flex;
   flex-direction: row;
@@ -106,6 +106,7 @@ body {
 
 #add-list-button {
   float:left;
+  
 }
 
 .list-card, .selected-list-card, .unselected-list-card {
@@ -119,6 +120,10 @@ body {
   cursor: pointer;
   background-color: var(--swatch-contrast);
   color:white;
+}
+
+div.c {
+  font-size: 30px;
 }
 
 .selected-list-card {

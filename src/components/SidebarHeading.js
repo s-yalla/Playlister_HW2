@@ -8,12 +8,7 @@ export default class SidebarHeading extends React.Component {
     render() {
         return (
             <div id="sidebar-heading">
-                <input 
-                    type="button" 
-                    id="add-list-button" 
-                    className="toolbar-button" 
-                    onClick={this.handleClick}
-                    value="+" />
+                <input type="button" id="add-list-button" className="toolbar-button" onClick={this.handleClick} value="+" />
                 Your Playlists
             </div>
         );
