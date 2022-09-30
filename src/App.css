@@ -159,7 +159,6 @@ div.c {
 }
 
 .playlister-song, .playlister-song-dragged-to { 
-  display:flex;
   align-items: center;
   font-size: 20pt;
   height:20%;
@@ -208,8 +207,8 @@ input {
 
 .modal-root {
   position: relative;
-  max-width: 65vw;
-  max-height: 40vh;
+  max-width: 120vw;
+  max-height: 70vw;
   overflow: visible;
   display: flex;
   flex-direction: column;
@@ -238,6 +237,10 @@ input {
   grid-template-rows: 33% 33% 33%;
   gap: 10px 20px;
   font-size: 20pt;
+}
+
+.delete-song {
+  float: right;
 }
 
 span {

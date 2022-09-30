@@ -20,6 +20,7 @@ import PlaylistCards from './components/PlaylistCards.js';
 import SidebarHeading from './components/SidebarHeading.js';
 import SidebarList from './components/SidebarList.js';
 import Statusbar from './components/Statusbar.js';
+import DeleteSongModal from './components/DeleteSongModal.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -38,7 +39,9 @@ class App extends React.Component {
         this.state = {
             listKeyPairMarkedForDeletion : null,
             currentList : null,
-            sessionData : loadedSessionData
+            sessionData : loadedSessionData,
+            DeleteSongNameData : null,
+            DeleteSongIndexData: null
         }
     }
     sortKeyNamePairsByName = (keyNamePairs) => {
@@ -276,6 +279,14 @@ class App extends React.Component {
         let modal = document.getElementById("delete-list-modal");
         modal.classList.remove("is-visible");
     }
+    makeDeleteSongModalVisibile(){
+        let modal = document.getElementById('delete-song-modal');
+        modal.classList.add('is-visible');
+    }
+    makeDeleteSongModalINVisibile(){
+        let modal = document.getElementById('delete-song-modal');
+        modal.classList.remove('is-visible');
+    }
     //delete song transaction
 
     
@@ -295,7 +306,6 @@ class App extends React.Component {
     addSongTransaction= () =>
     {
         let tpsObj = new AddSong_Transaction(this,this.state.currentList.songs.length);
-        
         this.tps.addTransaction(tpsObj);
     }
 
@@ -305,15 +315,26 @@ class App extends React.Component {
        let remVal = this.state.currentList.songs.splice(index,1);
        this.setStateWithUpdatedList(this.state.currentList);
     }
-    undoRemoveSong()
+    
+    removeSongTransaction= (index) =>
     {
-
+        let tpsObj = new RemoveSong_Transaction(this,index);//song obj?
+        this.tps.addTransaction(tpsObj);
     }
-
-    removeSongTransaction= () =>
-    {
-
+    
+    markSong_Deletion = (key) => {
+        this.setState(prevState => ({
+            listKeyPairMarkedForDeletion: prevState.listKeyPairMarkedForDeletion,
+            currentList: prevState.currentList,
+            sessionData: prevState.sessionData,
+            DeleteSongIndexData: prevState.sessionData,
+            DeleteSongNameData:key
+        }), () => {
+            this.makeDeleteSongModalVisibile()
+            this.tps.clearAllTransactions();
+        });
     }
+    
     render() {
         let canAddSong = this.state.currentList !== null;
         let canUndo = this.tps.hasTransactionToUndo();
@@ -344,13 +365,20 @@ class App extends React.Component {
                 />
                 <PlaylistCards
                     currentList={this.state.currentList}
-                    moveSongCallback={this.addMoveSongTransaction} />
+                    moveSongCallback={this.addMoveSongTransaction} 
+                    deleteSongCallback={this.markSong_Deletion}
+                    />
                 <Statusbar 
                     currentList={this.state.currentList} />
                 <DeleteListModal
                     listKeyPair={this.state.listKeyPairMarkedForDeletion}
                     hideDeleteListModalCallback={this.hideDeleteListModal}
                     deleteListCallback={this.deleteMarkedList}
+                />
+                <DeleteSongModal
+                    listNow ={this.state.currentList}
+                    hideDeleteSongModalCallback={this.makeDeleteSongModalINVisibile}
+                    deleteS_Callback={this.removeSong}
                 />
             </div>
         );
