@@ -18,6 +18,6 @@ export default class AddSong_Transaction extends jsTPS_Transaction {
     }
     
     undoTransaction() {
-        this.app.removeSong(this.index);
+        this.app.undoADD(this.index);
     }
 }

@@ -63,6 +63,11 @@ export default class SongCard extends React.Component {
     getItemNum = () => {
         return this.props.id.substring("playlist-song-".length);
     }
+    handleEdit = (passed) => {
+
+        this.props.editSongCallback(this.getItemNum()-1);
+
+    }
 
     render() {
         const { song} = this.props;
@@ -81,6 +86,7 @@ export default class SongCard extends React.Component {
                 onDragEnter={this.handleDragEnter}
                 onDragLeave={this.handleDragLeave}
                 onDrop={this.handleDrop}
+                onDoubleClick = {this.handleEdit}
                 draggable="true"
             >
                 {num}. <a href={"https://www.youtube.com/watch?v=" +song.youTubeId}  
