@@ -252,6 +252,7 @@ class App extends React.Component {
             this.db.mutationUpdateList(this.state.currentList);
         }
     }
+
     // THIS FUNCTION BEGINS THE PROCESS OF PERFORMING A REDO
     redo = () => {
         if (this.tps.hasTransactionToRedo()) {
@@ -261,6 +262,19 @@ class App extends React.Component {
             this.db.mutationUpdateList(this.state.currentList);
         }
     }
+
+    componentDidMount() {
+        document.addEventListener("keydown", (event) => {
+            if (event.ctrlKey && event.key === "z") {
+              this.undo();
+            }
+            else if (event.ctrlKey && event.key === "y")
+            {
+                this.redo();
+            }
+          });
+    }
+
     markListForDeletion = (keyPair) => {
         this.setState(prevState => ({
             currentList: prevState.currentList,

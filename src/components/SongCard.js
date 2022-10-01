@@ -63,8 +63,7 @@ export default class SongCard extends React.Component {
     getItemNum = () => {
         return this.props.id.substring("playlist-song-".length);
     }
-    handleEdit = (passed) => {
-
+    handleEdit = () => {
         this.props.editSongCallback(this.getItemNum()-1);
 
     }
