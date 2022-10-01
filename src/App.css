@@ -161,7 +161,8 @@ div.c {
 .playlister-song, .playlister-song-dragged-to { 
   align-items: center;
   font-size: 20pt;
-  height:20%;
+  height:60px;
+  width: 690px;
   border-radius: 70px;
   background-color: var(--swatch-complement);
   margin-top: 10px;

@@ -44,7 +44,11 @@ class App extends React.Component {
             currentList : null,
             sessionData : loadedSessionData,
             SongNameData : "",
-            IndexData: -1
+            IndexData: -1,
+            canAddSong: false,
+            canUndo:false,
+            canRedo:false,
+            canClose:false
         }
     }
     sortKeyNamePairsByName = (keyNamePairs) => {
@@ -186,6 +190,7 @@ class App extends React.Component {
             // AN AFTER EFFECT IS THAT WE NEED TO MAKE SURE
             // THE TRANSACTION STACK IS CLEARED
             this.tps.clearAllTransactions();
+            this.updateToolbar();
         });
     }
     // THIS FUNCTION BEGINS THE PROCESS OF CLOSING THE CURRENT LIST
@@ -198,6 +203,8 @@ class App extends React.Component {
             // AN AFTER EFFECT IS THAT WE NEED TO MAKE SURE
             // THE TRANSACTION STACK IS CLEARED
             this.tps.clearAllTransactions();
+            this.updateToolbar();
+
         });
     }
     setStateWithUpdatedList(list) {
@@ -209,6 +216,8 @@ class App extends React.Component {
             // UPDATING THE LIST IN PERMANENT STORAGE
             // IS AN AFTER EFFECT
             this.db.mutationUpdateList(this.state.currentList);
+            this.updateToolbar();
+
         });
     }
     getPlaylistSize = () => {
@@ -250,6 +259,8 @@ class App extends React.Component {
 
             // MAKE SURE THE LIST GETS PERMANENTLY UPDATED
             this.db.mutationUpdateList(this.state.currentList);
+            this.updateToolbar();
+
         }
     }
 
@@ -260,6 +271,8 @@ class App extends React.Component {
 
             // MAKE SURE THE LIST GETS PERMANENTLY UPDATED
             this.db.mutationUpdateList(this.state.currentList);
+            this.updateToolbar();
+
         }
     }
 
@@ -319,8 +332,20 @@ class App extends React.Component {
         let modal = document.getElementById("edit-song");
         modal.classList.remove('is-visible');
     }
-    //delete song transaction
+    updateToolbar()
+    {
+        let canAddSong = this.state.currentList !== null;
+        let canUndo = this.tps.hasTransactionToUndo();
+        let canRedo = this.tps.hasTransactionToRedo();
+        let canClose = this.state.currentList !== null;
+        this.setState({
+            canAddSong: canAddSong,
+            canUndo: canUndo,
+            canRedo: canRedo,
+            canClose: canClose
 
+        });
+    }
     
     addSong()
     {
@@ -425,10 +450,8 @@ class App extends React.Component {
     }
     
     render() {
-        let canAddSong = this.state.currentList !== null;
-        let canUndo = this.tps.hasTransactionToUndo();
-        let canRedo = this.tps.hasTransactionToRedo();
-        let canClose = this.state.currentList !== null;
+ 
+        
         return (
             <div id="root">
                 <Banner />
@@ -443,10 +466,10 @@ class App extends React.Component {
                     renameListCallback={this.renameList}
                 />
                 <EditToolbar
-                    canAddSong={canAddSong}
-                    canUndo={canUndo}
-                    canRedo={canRedo}
-                    canClose={canClose} 
+                    canAddSong={this.state.canAddSong}
+                    canUndo={this.state.canUndo}
+                    canRedo={this.state.canRedo}
+                    canClose={this.state.canClose} 
                     undoCallback={this.undo}
                     redoCallback={this.redo}
                     closeCallback={this.closeCurrentList}
